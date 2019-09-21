@@ -17,7 +17,6 @@ router.post('/signup', (req,res,next) => {
   let password = req.body.password
   let email = req.body.email
   let company = req.body.company
-
   const saltRounds = 10;
 
 
