@@ -1,8 +1,19 @@
 const express = require('express');
 const router = express.Router();
-const Enterprise = require('../routes/enterprise')
+const Enterprise = require('../models/Enterprise')
+const User = require('../models/User')
+const Requests = require('../models/Requests')
+
+router.use((req,res,next) => {
+  if (!req.user) {
+    res.redirect("/");
+  }
+  next();
+})
 
 //create
+
+
 
 //current requests of enterprise
 
