@@ -21,10 +21,10 @@ const cloudinary = require('../config/cloudinary.js');
 
 router.post('/', (req, res, next) => {
   console.log(req.body);
-  console.log(req.body.name);
+  console.log(req.body.blob);
   console.log("hi");
    
-  cloudinary.v2.uploader.upload(req.body.name,
+  cloudinary.v2.uploader.upload(req.body.blob,
       { resource_type: "video" },
       function (error, result) { console.log(result, error); });
 });

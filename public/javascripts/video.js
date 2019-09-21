@@ -59,8 +59,6 @@ async function startCapturing(e) {
   mediaRecorder.addEventListener('dataavailable', event => {
     if (event.data && event.data.size > 0) {
       recording.push(event.data);
-      console.log("hih");
-      
     }
   });
   mediaRecorder.start(10);
@@ -86,22 +84,23 @@ function download() {
   var blob = new Blob(recording, {
     type: 'video/webm'
   });
-  var url = URL.createObjectURL(blob);
-  var a = document.createElement('a');
-  document.body.appendChild(a);
-  a.style = 'display: none';
-  a.href = url;
-  a.download = 'test.webm';
-  a.click();
-  console.log(a)
+  // var url = URL.createObjectURL(blob);
+  // var a = document.createElement('a');
+  // document.body.appendChild(a);
+  // a.style = 'display: none';
+  // a.href = url;
+  // a.download = 'test.webm';
+  // a.click();
+  // console.log(a)
   // window.URL.revokeObjectURL(url);
-  // var reader = new FileReader();
-  // reader.readAsDataURL(blob);
-  // reader.onloadend = function () {
-  //   var base64data = reader.result;
-  //   console.log(base64data);
+  var reader = new FileReader();
+  reader.readAsDataURL(blob);
+  console.log(blob);
+  reader.onloadend = function () {
+    var base64data = reader.result;
+    console.log(base64data);
 
-  axios.post('/upload', {name: a.download})
+  axios.post('/upload', {blob: base64data})
     .then(console.log("success"))
     .catch(err => console.error(err))
   // axios.post('/upload', {name: a.download})
@@ -112,5 +111,6 @@ function download() {
     //   { resource_type: "video" },
     //   function (error, result) { console.log(result, error); });
 
+  }
 }
 
