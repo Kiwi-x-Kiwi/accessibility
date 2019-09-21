@@ -10,6 +10,21 @@ const logger       = require('morgan');
 const path         = require('path');
 
 
+const bcrypt       = require('bcryptjs')
+
+const session    = require("express-session");
+const MongoStore = require("connect-mongo")(session);
+
+const flash      = require('connect-flash');
+
+const passport   = require('passport')
+const LocalStrategy     = require('passport-local').Strategy
+
+const GoogleStrategy = require("passport-google-oauth20").Strategy;
+
+const User              = require('./models/User')
+
+
 mongoose
   .connect('mongodb://localhost/accessibility', {useNewUrlParser: true})
   .then(x => {
@@ -47,7 +62,93 @@ app.use(favicon(path.join(__dirname, 'public', 'images', 'favicon.ico')));
 
 
 // default value for title local
-app.locals.title = 'Express - Generated with IronGenerator';
+app.locals.title = 'Access This.';
+
+
+
+
+app.use(session({
+  secret: "our-passport-local-strategy-app",
+  resave: true,
+  saveUninitialized: true
+}));
+
+
+
+passport.serializeUser((user, cb) => {
+  cb(null, user._id);
+});
+
+passport.deserializeUser((id, cb) => {
+  User.findById(id, (err, user) => {
+    if (err) { return cb(err); }
+    cb(null, user);
+  });
+});
+
+passport.use(new LocalStrategy((username, password, next) => {
+  User.findOne({ username }, (err, user) => {
+    if (err) {
+      return next(err);
+    }
+    if (!user) {
+      return next(null, false, { message: "Incorrect username" });
+    }
+    if (!bcrypt.compareSync(password, user.password)) {
+      return next(null, false, { message: "Incorrect password" });
+    }
+
+    return next(null, user);
+  });
+}));
+
+
+// passport.use(
+//   new GoogleStrategy(
+//     {
+//       clientID: process.env.GID,
+//       clientSecret: process.env.GSECRET,
+//       callbackURL: "/auth/google/callback"
+//     },
+//     (accessToken, refreshToken, profile, done) => {
+//       // to see the structure of the data in received response:
+//       console.log("Google account details:", profile);
+
+//       User.findOne({ googleID: profile.id })
+//         .then(user => {
+//           if (user) {
+//             done(null, user);
+//             return;
+//           }
+
+//           User.create({ 
+//             googleID: profile.id,
+//             username: profile._json.name,
+//             email: profile._json.email,
+//             isAdmin: false
+//            })
+//             .then(newUser => {
+//               done(null, newUser);
+//             })
+//             .catch(err => done(err)); // closes User.create()
+//         })
+//         .catch(err => done(err)); // closes User.findOne()
+//     }
+//   )
+// );
+
+
+app.use(passport.initialize());
+app.use(passport.session());
+
+app.use(flash());
+
+
+app.use((req, res, next) => {
+  res.locals.user = req.user
+  res.locals.errorMessage = req.flash('error')
+  next();
+})
 
 
 

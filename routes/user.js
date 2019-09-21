@@ -41,6 +41,39 @@ router.get('/login', (req,res,next) => {
   res.render('user-views/login')
 })
 
+router.post('/login', passport.authenticate("local", {
+  successRedirect: "/user/dashboard",
+  failureRedirect: "/user/login",
+  failureFlash: true,
+  passReqToCallback: true
+}));
+
+router.use((req,res,next) => {
+  if (!req.user) {
+    res.redirect("/user/login");
+  }
+  next();
+})
+
+router.post('/logout', (req, res, next) => {
+  req.logout();
+  res.redirect('/')
+});
+
+router.get('/dashboard', (req, res, next) => {
+  res.render('user-views/dashboard')
+})
+
+router.get('/update', (req,res,next) => {
+  res.render('user-views/profile')
+})
+
+router.post("/delete", (req,res,next) => {
+  User.findByIdAndRemove(req.user.id).then(data => {
+    req.logout();
+    res.redirect("/")
+  }).catch(err => next(err))
+})
 
 
 module.exports = router;

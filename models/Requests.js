@@ -12,6 +12,7 @@ const requestSchema = new Schema({
   qualifications: [{type: String, enum: ['Color Blind', 'Low Vision', 'Screen Reader', 'Hearing Impared', 'Dyslexia']}],
   webURL: String,
   payment: Number,
+  isClosed: false,
 })
 
 const Request = mongoose.model('Request', requestSchema)

@@ -12,6 +12,7 @@ const enterpriseSchema = new Schema({
   email: String,
   googleID: String,
   requests: [ { type : Schema.Types.ObjectId, ref: 'Request' } ],
+  isEnterprise: Boolean
 })
 
 const Enterprise = mongoose.model('Enterprise', enterpriseSchema)
