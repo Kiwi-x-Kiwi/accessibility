@@ -9,6 +9,30 @@
   <link rel="stylesheet" href="/stylesheets/style.css" />
 </head>
 <body>
+  <header>
+    <a href="/">AccessTest</a>
+
+    <nav>
+    {{#unless user}}
+      <div>
+      <a href="/user/login">User Login</a> |
+      <a href="/enterprise/login">Enterprise Login</a>
+      </div>
+
+      <div>
+        <a href="/user/signup">User Signup</a> |
+        <a href="/enterprise/signup">Enterprise Signup</a>
+      </div>
+    {{/unless}}
+
+    {{#if user}}
+      <form action="/logout" method="POST">
+      <button>Logout</button>
+      </form>
+    {{/if}}
+
+    </nav>
+  </header>
 
   {{{body}}}
 
