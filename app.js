@@ -154,13 +154,13 @@ const index = require('./routes/index');
 app.use('/', index);
 
 
-app.use('/enterprise', require('./routes/enterprise'))
-app.use('/user', require('./routes/user'))
-app.use('/requests', require('./routes/requests'))
+// app.use('/enterprise', require('./routes/enterprise'))
+// app.use('/user', require('./routes/user'))
+// app.use('/requests', require('./routes/requests'))
 
 
-const video = require('./routes/video');
-app.use('/video', video);
+// const video = require('./routes/video');
+// app.use('/video', video);
 
 
 
