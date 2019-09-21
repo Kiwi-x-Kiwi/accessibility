@@ -1,6 +1,8 @@
-const stopElem = document.getElementById("stop");
-
 let recording = [];
+let mediaRecorder;
+
+const startElem = document.getElementById("start");
+const stopElem = document.getElementById("stop");
 
 var displayMediaOptions = {
   video: {
@@ -13,8 +15,20 @@ stopElem.addEventListener("click", function (evt) {
   stopCapture();
 }, false);
 
+startElem.addEventListener("click", function (evt) {
+  startCapture();
+}, false);
+
 function stopCapture(evt) {
   download();
+}
+
+async function startCapture(evt){
+  try {
+    startCapturing();
+  } catch (err) {
+    console.error("Error: " + err);
+  }
 }
 
 async function startCapturing() {
@@ -22,7 +36,7 @@ async function startCapturing() {
 
   recording = [];
   const stream = await navigator.mediaDevices.getDisplayMedia({video: true});
-  let mediaRecorder = new MediaRecorder(stream, { mimeType: 'video/webm' });
+  mediaRecorder = new MediaRecorder(stream, { mimeType: 'video/webm' });
   mediaRecorder.addEventListener('dataavailable', event => {
     if (event.data && event.data.size > 0) {
       recording.push(event.data);
@@ -42,17 +56,13 @@ function download() {
   reader.onloadend = function () {
     var base64data = reader.result;
     console.log(base64data);
-
-  axios.post('/upload', {blob: base64data})
-    .then(mediaRecorder.stop())
-    .catch(err => console.error(err))
+    axios.post('/upload', {blob: base64data})
+      // .then(mediaRecorder.stop())
+      .then(console.log("Success"))
+      .catch(err => console.error(err))
   }
 }
 
 document.onload = function () {
-  try {
-    startCapturing();
-  } catch (err) {
-    console.error("Error: " + err);
-  }
+  startElem.click();
 }
