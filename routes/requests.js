@@ -12,7 +12,17 @@ router.use((req,res,next) => {
 })
 
 //create
+router.get('/create', (req,res,next) => {
+  res.render("requests/new")
+})
 
+router.post('/create', (req,res,next) => {
+  Requests.create({
+    
+  }).then(
+    res.redirect('/enterprise')
+  ).catch(err => next(err))
+})
 
 
 //current requests of enterprise
