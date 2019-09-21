@@ -1,2 +1,17 @@
 <h1>{{title}}</h1>
 <p>Welcome to {{title}}</p>
+
+
+{{!-- // views/movie-add.hbs --}}
+<h2>Upload a new video</h2>
+<form action="/upload" method="post" enctype="multipart/form-data">
+  <label>Poster</label>
+  <input type="file" name="file">
+
+  <input type="submit" value="SAVE">
+</form>
+
+<button id = "upload">Upload</button>
+
+{{!-- <script src="../config/cloudinary.js"></script> --}}
+{{!-- <script src="/javascripts/upload.js"></script> --}}

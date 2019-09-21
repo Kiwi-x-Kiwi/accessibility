@@ -8,6 +8,8 @@ const hbs          = require('hbs');
 const mongoose     = require('mongoose');
 const logger       = require('morgan');
 const path         = require('path');
+const uploadCloud  = require('./config/cloudinary.js');
+const multer       = require("multer")
 
 
 mongoose
@@ -45,6 +47,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use(favicon(path.join(__dirname, 'public', 'images', 'favicon.ico')));
 
 
+// app.use(multer)
 
 // default value for title local
 app.locals.title = 'Express - Generated with IronGenerator';
@@ -56,6 +59,9 @@ app.use('/', index);
 
 const video = require('./routes/video');
 app.use('/video', video);
+
+const upload = require('./routes/upload');
+app.use('/upload', upload);
 
 
 
