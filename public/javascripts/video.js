@@ -59,7 +59,7 @@ async function startCapturing(e) {
 }
 
 function download() {
-  mediaRecorder.stop();
+  // mediaRecorder.stop();
   var blob = new Blob(recording, {
     type: 'video/webm'
   });
