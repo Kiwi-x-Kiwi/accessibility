@@ -6,7 +6,7 @@ const stopElem = document.getElementById("stop");
 const clientSiteForm = document.getElementById("client-site-form");
 const clientSite = document.getElementById("client-site");
 const siteLink = document.getElementById("site-link");
-const enterpriseID = document.getElementById("hidden").getAttribute("alt");
+const userID = document.getElementById("hidden").getAttribute("alt");
 
 var displayMediaOptions = {
   video: {
@@ -62,7 +62,9 @@ function download() {
     var base64data = reader.result;
     console.log(base64data);
     console.log(enterpriseID);
-    axios.post(`/upload/${enterpriseID}`, {blob: base64data})
+    axios.post(`/upload/${enterpriseID}`, 
+      {blob: base64data,
+      userID: userID})
       // .then(mediaRecorder.stop())
       .then(console.log("Success"))
       .catch(err => console.error(err))

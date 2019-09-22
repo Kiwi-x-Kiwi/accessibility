@@ -70,16 +70,11 @@ app.use(favicon(path.join(__dirname, 'public', 'images', 'favicon.ico')));
 // default value for title local
 app.locals.title = 'Access This.';
 
-
-
-
 app.use(session({
   secret: "our-passport-local-strategy-app",
   resave: true,
   saveUninitialized: true
 }));
-
-
 
 passport.serializeUser((user, cb) => {
   cb(null, user._id);

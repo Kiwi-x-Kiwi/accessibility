@@ -43,18 +43,18 @@ router.get('/user-video/:enterprise', (req, res, next) => {
 
 router.post('/login', passport.authenticate("local", {
   successRedirect: "/enterprise/dashboard",
-  failureRedirect: "/enterprise/login",
+  failureRedirect: "/enterprise/dashboard",
   failureFlash: true,
   passReqToCallback: true,}));
 
-router.use((req,res,next) => {
-  if (!req.user) {
-    console.log(req.user)
-    res.redirect("/enterprise/dashboard");
-    return;
-  }
-  next();
-})
+// router.use((req,res,next) => {
+//   if (!req.user) {
+//     console.log(req.user)
+//     res.redirect("/enterprise/dashboard");
+//     return;
+//   }
+//   next();
+// })
 
 router.post('/logout', (req, res, next) => {
   req.logout();

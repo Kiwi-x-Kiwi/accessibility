@@ -1,7 +1,9 @@
 const express = require('express');
 const router  = express.Router();
 
+
 const User        = require('../models/User');
+const Requests        = require('../models/Requests');
 const bcrypt     = require("bcryptjs");
 const passport = require("passport");
 
@@ -61,7 +63,21 @@ router.post('/logout', (req, res, next) => {
 });
 
 router.get('/dashboard', (req, res, next) => {
-  res.render('user-views/dashboard')
+  Requests.find({}).populate("enterpriseUser")
+    .then(requestsFromDB =>{
+      let requests = requestsFromDB.filter((request) =>{
+        let i = 0;
+        while(i < request.qualifications.length){
+          if(req.user.qualifications.includes(requestsFromDB.qualifications[i])) 
+            return true;
+
+          i++;
+        }
+        return false;
+      })
+      res.render('user-views/dashboard', {requests})
+    })
+    .catch(err => console.error(err))
 })
 
 router.get('/update', (req,res,next) => {

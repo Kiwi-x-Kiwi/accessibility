@@ -4,17 +4,28 @@ const Enterprise = require('../models/Enterprise')
 const User = require('../models/User')
 const Requests = require('../models/Requests')
 
-router.use((req,res,next) => {
-  if (!req.user) {
-    res.redirect("/");
-  }
-  next();
-})
+// router.use((req,res,next) => {
+//   if (!req.user) {
+//     res.redirect("/");
+//   }
+//   next();
+// })
 
 //create
+// router.get('/create', (req,res,next) => {
+//   res.render("request-views/new")
+// })
+
 router.get('/create', (req,res,next) => {
   res.render("request-views/new")
 })
+router.get('/:id/view', (req,res,next) => {
+  res.render("request-views/video", {requestID: req.params.id})
+})
+router.get('/:id', (req,res,next) => {
+  res.render("request-views/record")
+})
+
 
 router.post('/create', (req,res,next) => {
   Requests.create({
