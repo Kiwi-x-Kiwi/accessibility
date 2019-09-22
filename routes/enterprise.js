@@ -37,6 +37,9 @@ router.get('/login', (req,res,next) => {
   res.render('enterprise-views/login')
 })
 
+router.get('/user-video/:enterprise', (req, res, next) => {
+  res.render('enterprise-views/user-video',{enterpriseID: req.params.enterprise})
+})
 router.post('/login', passport.authenticate("local", {
   successRedirect: "/enterprise/dashboard",
   failureRedirect: "/enterprise/login",
@@ -46,6 +49,8 @@ router.post('/login', passport.authenticate("local", {
 
 router.use((req,res,next) => {
   if (!req.user) {
+    console.log(req.user)
+    debugger
     res.redirect("/enterprise/login");
   }
   next();
@@ -55,6 +60,7 @@ router.post('/logout', (req, res, next) => {
   req.logout();
   res.redirect('/')
 });
+
 
 router.get('/dashboard', (req, res, next) => {
   res.render('enterprise-views/dashboard')

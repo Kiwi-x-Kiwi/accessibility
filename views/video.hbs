@@ -1,6 +1,13 @@
 <button id="start">Start</button></p>
 <button id="stop">End Recording Session</button></p>
 
-<iframe id="client-site"></iframe>
+<form action="/" id="client-site-form">
+  <input type="text" id = "site-link">
+  <button type="submit">Go!</button>
+</form>
 
-<script type = "module" src="/javascripts/video.js"></script>
+<iframe id="client-site" src="" style="width: 100vw; height: 75vh"></iframe>
+
+<img id = "hidden" style="none" alt = {{enterpriseID}}>
+
+<script src="/javascripts/record.js"></script>
