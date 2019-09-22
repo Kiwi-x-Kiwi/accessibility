@@ -40,18 +40,18 @@ router.get('/login', (req,res,next) => {
 router.get('/user-video/:enterprise', (req, res, next) => {
   res.render('enterprise-views/user-video',{enterpriseID: req.params.enterprise})
 })
+
 router.post('/login', passport.authenticate("local", {
   successRedirect: "/enterprise/dashboard",
   failureRedirect: "/enterprise/login",
   failureFlash: true,
-  passReqToCallback: true
-}));
+  passReqToCallback: true,}));
 
 router.use((req,res,next) => {
   if (!req.user) {
     console.log(req.user)
-    debugger
-    res.redirect("/enterprise/login");
+    res.redirect("/enterprise/dashboard");
+    return;
   }
   next();
 })
