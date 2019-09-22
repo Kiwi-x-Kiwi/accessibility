@@ -13,14 +13,17 @@ router.use((req,res,next) => {
 
 //create
 router.get('/create', (req,res,next) => {
-  res.render("requests/new")
+  res.render("request-views/new")
 })
 
 router.post('/create', (req,res,next) => {
   Requests.create({
-    
+    enterpriseUser: req.user.id,
+    qualifications: req.body.qualification,
+    webURL: req.body.webURL,
+    isClosed: false,
   }).then(
-    res.redirect('/enterprise')
+    res.redirect('/enterprise/dashboard')
   ).catch(err => next(err))
 })
 
