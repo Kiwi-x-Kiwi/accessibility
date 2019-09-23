@@ -65,17 +65,19 @@ router.post('/logout', (req, res, next) => {
 router.get('/dashboard', (req, res, next) => {
   Requests.find({}).populate("enterpriseUser")
     .then(requestsFromDB =>{
-      let requests = requestsFromDB.filter((request) =>{
-        let i = 0;
-        while(i < request.qualifications.length){
-          if(req.user.qualifications.includes(requestsFromDB.qualifications[i])) 
-            return true;
+      // console.log(requestsFromDB)
+      // console.log(requestsFromDB.qualifications)
+      // let requests = requestsFromDB.filter((request) =>{
+      //   let i = 0;
+      //   while(i < request.qualifications.length){
+      //     if(req.user.qualifications.includes(requestsFromDB.qualifications[i])) 
+      //       return true;
 
-          i++;
-        }
-        return false;
-      })
-      res.render('user-views/dashboard', {requests})
+      //     i++;
+      //   }
+      //   return false;
+      // })
+      res.render('user-views/dashboard', {requests:requestsFromDB})
     })
     .catch(err => console.error(err))
 })

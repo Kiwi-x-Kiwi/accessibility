@@ -2,6 +2,7 @@ const express = require('express');
 const router  = express.Router();
 
 const Enterprise = require('../models/Enterprise');
+const Requests = require('../models/Requests');
 const bcrypt     = require("bcryptjs");
 const passport = require("passport");
 
@@ -63,7 +64,12 @@ router.post('/logout', (req, res, next) => {
 
 
 router.get('/dashboard', (req, res, next) => {
-  res.render('enterprise-views/dashboard')
+  Requests.find({ enterpriseUser: "5d873a06674e65b88da5698f"})
+    .then(requests =>{
+      console.log(requests)
+      res.render('enterprise-views/dashboard', {requests})
+      
+    })
 })
 
 router.get('/update', (req,res,next) => {

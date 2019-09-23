@@ -7,6 +7,7 @@ const clientSiteForm = document.getElementById("client-site-form");
 const clientSite = document.getElementById("client-site");
 const siteLink = document.getElementById("site-link");
 const userID = document.getElementById("hidden").getAttribute("alt");
+const requestID = document.getElementById("hiddenRequest").getAttribute("alt");
 
 var displayMediaOptions = {
   video: {
@@ -61,8 +62,9 @@ function download() {
   reader.onloadend = function () {
     var base64data = reader.result;
     console.log(base64data);
-    console.log(enterpriseID);
-    axios.post(`/upload/${enterpriseID}`, 
+    // console.log(enterpriseID);
+    // axios.post(`/upload/${requestID}${userID}`, 
+    axios.post(`/upload`, 
       {blob: base64data,
       userID: userID})
       // .then(mediaRecorder.stop())

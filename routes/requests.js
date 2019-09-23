@@ -23,13 +23,17 @@ router.get('/:id/view', (req,res,next) => {
   res.render("request-views/video", {requestID: req.params.id})
 })
 router.get('/:id', (req,res,next) => {
-  res.render("request-views/record")
+  console.log(req.user._id)
+  res.render("request-views/record", {
+    requestID: req.params.id,
+    userID: req.user._id
+  })
 })
 
 
 router.post('/create', (req,res,next) => {
   Requests.create({
-    enterpriseUser: req.user.id,
+    enterpriseUser: "5d873a06674e65b88da5698f",
     qualifications: req.body.qualification,
     webURL: req.body.webURL,
     isClosed: false,
