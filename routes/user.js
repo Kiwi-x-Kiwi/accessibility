@@ -1,17 +1,14 @@
-const express = require('express');
-const router  = express.Router();
-
-
-const User        = require('../models/User');
-const Requests        = require('../models/Requests');
+const express    = require('express');
+const router     = express.Router();
+const User       = require('../models/User');
+const Requests   = require('../models/Requests');
 const bcrypt     = require("bcryptjs");
-const passport = require("passport");
+const passport   = require("passport");
 
 
 router.get('/signup', (req,res,next) => {
   res.render("user-views/signup")
 })
-
 
 router.post('/signup', (req,res,next) => {
   let name = req.body.name
@@ -37,7 +34,6 @@ router.post('/signup', (req,res,next) => {
 
   }).catch(err => next(err))
 })
-
 
 router.get('/login', (req,res,next) => {
   res.render('user-views/login')
